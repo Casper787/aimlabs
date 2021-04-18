@@ -1,1 +1,1 @@
-This is the beginnign of the README
+This is the beginning of the README
