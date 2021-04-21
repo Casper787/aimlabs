@@ -9,15 +9,17 @@ from graphics import *
 import random
 
 def main(win):
+    # Final stat elements
     score = 0
+    hits = 0
     # Main game internal instructions
     for i in range(5):
         # Target elements
-        r = random.randrange(10, 256)
-        g = random.randrange(10, 256)
-        b = random.randrange(10, 256)
-        x = random.randrange(10,290)
-        y = random.randrange(10,290)
+        r = randomColorGenerator()
+        g = randomColorGenerator()
+        b = randomColorGenerator()
+        x = randomCoordinateGenerator()
+        y = randomCoordinateGenerator()
         center = Point(x, y)
         #Target
         color = color_rgb(r, g, b)
@@ -34,11 +36,11 @@ def main(win):
         # if comparsion == FALSE, target was not hit
         if(hitRecognition(click, p1, p2, center, circle1) == 1):
             score += 10
+            hits += 1
             continue
+    showAccuracy(hits)
+    closingScreen(score)
         
-    print("Your score was: ",score)
-    win.getMouse()
-    win.close()
     
 def startingScreen():
     # Screen welcome message
@@ -66,7 +68,38 @@ def hitRecognition(click, p1, p2, center, circle1):
         circle1.undraw()
         return 0
     
+def closingScreen(score):
+    print("Your score was: ",score)
+    closingText = Text(Point(150, 100), "You have completed your session\n\n\n Thanks for playing\n\n Click to close")
+    closingText.setTextColor("white")
+    closingText.draw(win)
+    win.getMouse()
+    win.close()
+    
+def randomColorGenerator():
+    return random.randrange(10, 256)
+
+def randomCoordinateGenerator():
+    return random.randrange(10,290)
+
+def showAccuracy(hits):
+    hitsText = hits/5 * 100
+    accuracyText = Text(Point(150, 100), "Your total accuracy was\n")
+    accuracytext2 = Text(Point(150,125), hitsText)
+    accuracytext2.setTextColor("white")
+    accuracyText3 = Text(Point(150, 150), "Click to continue")
+    accuracyText.setTextColor("white")
+    accuracyText3.setTextColor( "white")
+    accuracyText.draw(win)
+    accuracytext2.draw(win)
+    accuracyText3.draw(win)
+    win.getMouse()
+    accuracyText.undraw()
+    accuracytext2.undraw()
+    accuracyText3.undraw()
+    
 win = GraphWin("Aim Lab", 300, 300)
 win.setBackground("black")
 startingScreen()
 main(win)
+
